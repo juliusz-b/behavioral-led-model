@@ -1,0 +1,16 @@
+{
+  "_schemaVersion": "1.0.0",
+  "ledbehavioral":
+  {
+     "inputs":
+     [
+        {"name":"x", "kind":"required", "type":["numeric"], "purpose":"Input signal"},
+        {"name":"ledBandwidth3dB", "kind":"required", "type":["numeric"], "purpose":"LED 3dB bandwidth [Hz]"},
+        {"name":"frequencyOfZeroInH2", "kind":"required", "type":["numeric"], "purpose":"Frequency of zero in H2. Typically 0.2-0.3*ledBandwidth3dB [Hz]"},
+        {"name":"relativeSecondHarmonicPowerDb", "kind":"required", "type":["numeric"], "purpose":"Relative second harmonic power [dB]"},
+        {"name":"calibrationAmplitude", "kind":"required", "type":["numeric"], "purpose":"Amplitude of the signal for which second harmonic power was measured [a.u.]"},
+        {"name":"samplingFrequency", "kind":"required", "type":["numeric"], "purpose":"Sampling frequency of the signal [Hz]"},
+        {"name":"N", "kind":"required", "type":["numeric"], "purpose":"Number of filter coefficients"}
+     ]
+  }
+}

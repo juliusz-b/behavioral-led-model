@@ -1,0 +1,55 @@
+{
+    "_schemaVersion": "1.0.0",
+    "eyediag":
+        {
+            "inputs":
+            [
+                {"name":"x", "kind":"required", "type":["numeric"], "purpose":"Input signal"},
+                {"name":"n", "kind":"required", "type":["numeric"], "purpose":"Samples per one window [#]"},
+                {"name":"Offset",  "kind":"ordered", "type":["numeric"], "purpose":"Floating point offset of the input signal [.]"},
+                {"mutuallyExclusiveGroup":
+                    [
+                        [
+                            {"name":"Fs", "kind":"namevalue", "type":["numeric"], "purpose":"Sampling frequency [Hz]"},
+                            {"mutuallyExclusiveGroup":
+                                [
+                                    [
+                                        {"name":"Color", "kind":"namevalue", "type":["numeric"], "purpose":"Color of the line"}
+                                    ],
+                                    [
+                                        {"name":"Color", "kind":"namevalue", "type":["char"], "purpose":"Color of the line"}
+                                    ],
+                                    [
+                                        {"name":"Color", "kind":"namevalue", "type":["string"], "purpose":"Color of the line"}
+                                    ]
+                                ]
+                            },
+                            {"name":"NormalizeSignal", "kind":"namevalue", "type":["logical"], "purpose":"Should normalize signal"},
+                            {"name":"LineOpacity", "kind":"namevalue", "type":["numeric"], "purpose":"Opacity of the lines"},
+                            {"name":"PlotHistogram", "kind":"namevalue", "type":["logical"], "purpose":"Should plot histogram on the right side of the plot"}
+                        ],
+                        [
+                            {"name":"Fs", "kind":"ordered", "type":["numeric"], "purpose":"Sampling frequency [Hz]"},
+                            {"mutuallyExclusiveGroup":
+                                [
+                                    [
+                                        {"name":"Color", "kind":"namevalue", "type":["numeric"], "purpose":"Color of the line"}
+                                    ],
+                                    [
+                                        {"name":"Color", "kind":"namevalue", "type":["char"], "purpose":"Color of the line"}
+                                    ],
+                                    [
+                                        {"name":"Color", "kind":"namevalue", "type":["string"], "purpose":"Color of the line"}
+                                    ]
+                                ]
+                            },
+                            {"name":"NormalizeSignal", "kind":"namevalue", "type":["logical"], "purpose":"Should normalize signal"},
+                            {"name":"LineOpacity", "kind":"namevalue", "type":["numeric"], "purpose":"Opacity of the lines"},
+                            {"name":"PlotHistogram", "kind":"namevalue", "type":["logical"], "purpose":"Should plot histogram on the right side of the plot"}
+                        ]
+                    ]
+                }
+            ]
+        }
+}
+         
