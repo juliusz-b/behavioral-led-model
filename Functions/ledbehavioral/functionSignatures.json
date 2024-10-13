@@ -6,9 +6,9 @@
      [
         {"name":"x", "kind":"required", "type":["numeric"], "purpose":"Input signal"},
         {"name":"ledBandwidth3dB", "kind":"required", "type":["numeric"], "purpose":"LED 3dB bandwidth [Hz]"},
-        {"name":"frequencyOfZeroInH2", "kind":"required", "type":["numeric"], "purpose":"Frequency of zero in H2. Typically 0.2-0.3*ledBandwidth3dB [Hz]"},
-        {"name":"relativeSecondHarmonicPowerDb", "kind":"required", "type":["numeric"], "purpose":"Relative second harmonic power [dB]"},
-        {"name":"calibrationAmplitude", "kind":"required", "type":["numeric"], "purpose":"Amplitude of the signal for which second harmonic power was measured [a.u.]"},
+        {"name":"fA", "kind":"required", "type":["numeric"], "purpose":"Cutoff frequency in H2. Typically 0.2-0.3*ledBandwidth3dB [Hz]"},
+        {"name":"gamma", "kind":"required", "type":["numeric"], "purpose":"Nonlinearity factor [1/W]"},
+        {"name":"eta", "kind":"required", "type":["numeric"], "purpose":"Electrical to optical conversion factor [W/A]"},
         {"name":"samplingFrequency", "kind":"required", "type":["numeric"], "purpose":"Sampling frequency of the signal [Hz]"},
         {"name":"N", "kind":"required", "type":["numeric"], "purpose":"Number of filter coefficients"}
      ]

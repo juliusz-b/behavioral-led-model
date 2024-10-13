@@ -1,9 +1,8 @@
-function [y] = ledbehavioral(x,ledBandwidth3dB,frequencyOfZeroInH2,relativeSecondHarmonicPowerDb,calibrationAmplitude,samplingFrequency,N)
+function [y] = ledbehavioral(x,ledBandwidth3dB,fA,gamma,eta,samplingFrequency,N)
 %LEDBEHAVIORAL  Implements behavioral model in MATLAB for signal transmission.
 %   AUTHOR: GRZEGORZ STĘPNIAK, WARSAW UNIVERSITY OF TECHNOLOGY
 %   
-%   Y = LEDBEHAVIORAL(X,LEDBANDWIDTH3DB,FREQUENCYOFZEROINH2,
-%   RELATIVESECONDHARMONICPOWERDB,CALIBRATIONAMPLITUDE,
+%   Y = LEDBEHAVIORAL(X,LEDBANDWIDTH3DB,FA,GAMMA,ETA,
 %   SAMPLINGFREQUENCY,N) transmits X signal through LED utilizing
 %   two filter model presented in the paper entitled
 %   "A Behavioral Model of the Light Emitting Diode Nonlinearity".
@@ -14,14 +13,12 @@ function [y] = ledbehavioral(x,ledBandwidth3dB,frequencyOfZeroInH2,relativeSecon
 %   
 %   LEDBANDWIDTH3DB - LED 3dB bandwidth. [Hz]
 %   
-%   FREQUENCYOFZEROINH2 - zero in second filter. Typically around 0.2-0.3
+%   FA - cutoff of second filter(h2). Typically around 0.2-0.3
 %   of LEDBANDWIDTH3DB. [Hz]
 %   
-%   RELATIVESECONDHARMONICPOWERDB - Relative second harmonic
-%   (2*LEDBANDWIDTH3DB) power  to the fundamental (LEDBANDWIDTH3DB). [dB]
+%   GAMMA - nonlinearity factor [1/W]
 %   
-%   CALIBRATIONAMPLITUDE - Calibrated amplitude coefficient for which
-%   RELATIVESECONDHARMONICPOWERDB was measured. [.]
+%   ETA - Elctro optic conversion [W/A]
 %   
 %   SAMPLINGFREQUENCY - Sampling frequency of the signal X. [Hz]
 %   
@@ -33,7 +30,6 @@ function [y] = ledbehavioral(x,ledBandwidth3dB,frequencyOfZeroInH2,relativeSecon
 % Only 7 inputs are allowed.
 narginchk(7,7);
 
-al=0.1; % Electro optic conversion A/W
 
 % Check input variables
 if ~isvector(x) || ~isnumeric(x)
@@ -42,14 +38,14 @@ end
 if (~isreal(ledBandwidth3dB)||ledBandwidth3dB<0)
     error('3dB bandwidth must be a member of R+.')
 end
-if (~isreal(frequencyOfZeroInH2)||frequencyOfZeroInH2<0)
-    error('frequencyOfZeroInH2 frequency must be a member of R+.')
+if (~isreal(fA)||fA<0)
+    error('fA frequency must be a member of R+.')
 end
-if ~isreal(relativeSecondHarmonicPowerDb)
-    error('Relative second harmonic power must be real.')
+if ~isreal(gamma)
+    error('Gamma must be real.')
 end
-if ~isreal(calibrationAmplitude)
-    error('Calibrated amplitude must be real.')
+if ~isreal(eta)
+    error('Eta must be real.')
 end
 if ~isreal(samplingFrequency) || samplingFrequency<=0
     error('Sampling frequency must be real.')
@@ -61,30 +57,23 @@ end
 % Sampling interval
 T=1/samplingFrequency;
 
-% Convert second harmonic power from dB to linear scale
-relativeSecondHarmonicPowerLinear=10^(relativeSecondHarmonicPowerDb/20);
-
-% Calculate Gamma coefficient
-Gamma = (max(x)/calibrationAmplitude)*relativeSecondHarmonicPowerLinear*2*...
-    frequencyOfZeroInH2/(max(x)*ledBandwidth3dB*al);
-
 %Time vector
 t=0:T:(N-1)*T;
 
 % Calculate response of h1 filter (lowpass)
-h1=al*2*pi*ledBandwidth3dB*exp(-t*2*pi*ledBandwidth3dB);
+h1=eta*2*pi*ledBandwidth3dB*exp(-t*2*pi*ledBandwidth3dB);
 
 % Calculate response of h2 filter (highpass).
-h2=Gamma*ledBandwidth3dB/frequencyOfZeroInH2*(2*pi*frequencyOfZeroInH2*exp(-t*2*pi*ledBandwidth3dB) -...
+h2=gamma*ledBandwidth3dB/fA*(2*pi*fA*exp(-t*2*pi*ledBandwidth3dB) -...
     2*pi*ledBandwidth3dB*exp(-(t)*2*pi*ledBandwidth3dB));
 h2=h2+kroneckerdelta(t)*(2*pi*ledBandwidth3dB*sum(exp(-(t)*2*pi*ledBandwidth3dB)))*...
-    Gamma*ledBandwidth3dB/frequencyOfZeroInH2;
+    gamma*ledBandwidth3dB/fA;
 
 % Convolve input signal with h1
 x1=conv(x,h1)*T;
 
 % Convolve squared x1 signal with h2
-x2=conv(x1.^2,h2)*T;
+x2=0.5*conv(x1.^2,h2)*T;
 
 % Trim x2 so it matches x1;
 x2=x2(1:length(x1));
