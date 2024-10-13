@@ -7,6 +7,8 @@ This GitHub repository contains a ready-to-use implementation of a behavioral mo
 
 > Juliusz Bojarczuk, Michal Marzecki, Di Sun, Zuxin Jin, Pengfei Tian and Grzegorz Stepniak, "A Behavioral Model of the Light Emitting Diode Nonlinearity", under consideration for publication. [![DOI](https://img.shields.io/badge/DOI-TBA-blue)]()
 
+**When using the behavioral LED model, please remember to support our work by citing the aforementioned paper in your article.**
+
 </br>
 
 <details>
