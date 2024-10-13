@@ -73,9 +73,13 @@ else
 end
 
 %Normalization of the signal to the total power of 1
-if NormalizeSignal
-    x = x-mean(x);
-    x = x/std(x);
+if ischar(NormalizeSignal)
+    x = normalize(x,'range',[-1 1]);
+else
+    if NormalizeSignal
+        x = x-mean(x);
+        x = x/std(x);
+    end
 end
 
 %Perform shifting of the signal
@@ -127,7 +131,7 @@ if size(y_to_plot,2)>1
 end
 
 %Plotting
-p = plot(x_to_plot,y_to_plot,'color',Color);
+p = plot(x_to_plot,y_to_plot,'-','color',Color,'HandleVisibility','off');
 
 %Change opacity of the line - if necessary
 for i=1:length(p)
@@ -195,7 +199,7 @@ function p = generateParser()
     addOptional(p,'Offset',0,@isscalar);
     addOptional(p,'Fs',-Inf,@(x) isfinite(x) && isnumeric(x) && isscalar(x) && (x > 0));
     addParameter(p,'Color','blue',@(x) validateattributes(validatecolor(x),{'double'},{'nonempty'}));
-    addParameter(p,'NormalizeSignal',false,@islogical);
+    addParameter(p,'NormalizeSignal',false,@(x) isa(x,'logical')||isa(x,'char'));
     addParameter(p,'LineOpacity',1,@isnumeric);
     addParameter(p,'PlotHistogram',false,@islogical);
 end
