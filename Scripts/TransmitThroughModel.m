@@ -1,10 +1,10 @@
 addpath(genpath('Functions\'))
 % Set parameters of LED model
 ledBandwidth3dB = 45e6;
-frequencyOfZeroInH2 = ledBandwidth3dB*0.25;
-calibrationAmplitude = 1.2;
+fA = 11e6;
+eta = 0.02;
 lengthOfLedResponse = 50;
-relativeSecondHarmonicPowerDb = -21;
+gamma = 10;
 
 % Load symbols
 xInput = readmatrix('Sample data\example_PAM4_UF4_Alfa1_FilterSpan20.txt');
@@ -13,7 +13,8 @@ xInput = readmatrix('Sample data\example_PAM4_UF4_Alfa1_FilterSpan20.txt');
 baudRate = 100e6;
 upsamplingFactor = 4;
 samplingFrequency = baudRate*upsamplingFactor;
-signalAmplitudeCoefficient = 1.2;
+signalAmplitudeLow = .2;
+signalAmplitudeHigh = 1.2;
 
 %  ___ ___ _  _   ___   _____ ___  ___    _   _        _    ___ ___
 % | _ ) __| || | /_\ \ / /_ _/ _ \| _ \  /_\ | |      | |  | __|   \
@@ -21,9 +22,10 @@ signalAmplitudeCoefficient = 1.2;
 % |___/___|_||_/_/ \_\_/ |___\___/|_|_\/_/ \_\____|   |____|___|___/
 %
 
-xOutput = ledbehavioral(xInput*signalAmplitudeCoefficient, ledBandwidth3dB,...
-    frequencyOfZeroInH2, relativeSecondHarmonicPowerDb, calibrationAmplitude,...
-    samplingFrequency, lengthOfLedResponse);
+xOutputLow = ledbehavioral(xInput*signalAmplitudeLow, ledBandwidth3dB,...
+    fA, gamma, eta,samplingFrequency, lengthOfLedResponse);
+xOutputHigh = ledbehavioral(xInput*signalAmplitudeHigh, ledBandwidth3dB,...
+    fA, gamma, eta,samplingFrequency, lengthOfLedResponse);
 
 %
 %
@@ -32,8 +34,11 @@ xOutput = ledbehavioral(xInput*signalAmplitudeCoefficient, ledBandwidth3dB,...
 
 % Eyediagram
 figure('color','w')
-eyediag(xOutput(5e3:9e3), upsamplingFactor*2, Inf, samplingFrequency,...
-    'Color','blue','PlotHistogram',true,'LineOpacity',0.5);
+eyediag(xOutputLow(5e3:9e3), upsamplingFactor*2, Inf, samplingFrequency,...
+    'Color','blue','PlotHistogram',true,'LineOpacity',0.5,'NormalizeSignal',true);
+hold on;
+eyediag(xOutputHigh(5e3:9e3), upsamplingFactor*2, Inf, samplingFrequency,...
+    'Color','red','PlotHistogram',true,'LineOpacity',0.5,'NormalizeSignal',true);
 
-title([num2str(baudRate*1e-6) 'MBaud/s, amplitude: '...
-    num2str(signalAmplitude,'%.2f')])
+title([num2str(baudRate*1e-6) 'MBaud/s, amplitude: \color{blue}'...
+    num2str(signalAmplitudeLow,'%.2f') '\color{black} and \color{red}' num2str(signalAmplitudeHigh,'%.2f')])
