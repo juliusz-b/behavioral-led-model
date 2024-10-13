@@ -46,7 +46,7 @@ This repository contains three MATLAB scripts that serve as examples:
 (3b) We need the second measurement point for obtaining model parameters. Thus, you drive the LED with harmonic signal with amplitude $I_a$ and frequency equal to $\frac{1}{2} f_B$. Obtained power ratio of the second harmonic ($f_B$) to fundamental one ($frac{1}{2}f_B$) at the receiver is $P_{r2}$.\
 (4) Nonlinearity factor $\Gamma$ is equal to exactly $\sqrt{\frac{160}{3 I_a^2 \eta^2} \left ( P_{r2}-P_{r1} \right)}$, while cutoff frequency of second filter $2\pi f_A$ is equal to $\sqrt{4\omega_B^2\frac{P_{r2}-P_{r1}}{4P_{r1}-P_{r2}}}$.[^1].
 
-[^1]: Each parameter is described in detail in the main paper, and a brief overview can be found in the  [ledbehavioral.m](/Functions/ledbehavioral/ledbehavioral.m).
+[^1]: Each parameter is described in detail in the main paper, and a brief overview can be found in the  [ledbehavioral.m](./Functions/ledbehavioral/ledbehavioral.m).
 
 For this case, you can set LED model parameters as follows:
 
