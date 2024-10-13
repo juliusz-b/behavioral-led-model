@@ -40,7 +40,11 @@ This repository contains three MATLAB scripts that serve as examples:
 ### **TransmitThroughModel**
 
 
-Suppose that you have measured LED **3dB bandwidth** and is equal to **45 MHz**. For the same frequency, you have generated sinusoidal signal with amplitude coefficient equal to 1.2 and measured **relative second harmonic power** at the VLC transmission system, which is **-21 dB** (in decibel scale; to do this you can use *thd(measuredSignal,2)* in MATLAB). Assume that **zero of the second filter** is equal to 0.25 of the LED 3dB bandwidth, which is **11.25 MHz** [^1].
+(1) Suppose that you have measured LED **3dB bandwidth** ($f_B$,*ledBandwidth3dB*) and is equal to **45 MHz**.\
+(2) For the same frequency, you have generated sinusoidal signal with amplitude $I_a$ and measured fundamental harmonic power at the receiver as $P_{h1}(2\pi f_B)$. Electrical to optical conversion factor ($\eta$, *eta*) is equal to exactly $\frac{2\sqrt{P_{h1}(2\pi f_B)}}{I_a}$. For our case it will be 0.02.\
+(3a) Next, you drive the LED again with harmonic signal with amplitude $I_a$ and frequency equal to $f_B$. However you calculate the power ratio of the second harmonic ($2f_B$) to fundamental one ($f_B$) at the receiver and treat this ratio as $P_{r1}$.\
+(3b) We need the second measurement point for obtaining model parameters. Thus, you drive the LED with harmonic signal with amplitude $I_a$ and frequency equal to $\frac{1}{2} f_B$. Obtained power ratio of the second harmonic ($f_B$) to fundamental one ($frac{1}{2}f_B$) at the receiver is $P_{r2}$.\
+(4) Nonlinearity factor $\Gamma$ is equal to exactly $\sqrt{\frac{160}{3 I_a^2 \eta^2} \left ( P_{r2}-P_{r1} \right)}$, while cutoff frequency of second filter $2\pi f_A$ is equal to $\sqrt{4\omega_B^2\frac{P_{r2}-P_{r1}}{4P_{r1}-P_{r2}}}$.[^1].
 
 [^1]: Each parameter is described in detail in the main paper, and a brief overview can be found in the  [ledbehavioral.m](./Functions/ledbehavioral/ledbehavioral.m).
 
@@ -49,10 +53,10 @@ For this case, you can set LED model parameters as follows:
 ```Matlab
 % Set parameters of LED model
 ledBandwidth3dB = 45e6;
-frequencyOfZeroInH2 = ledBandwidth3dB*0.25;
-calibrationAmplitude = 1.2;
+fA = 11e6;
+eta = 0.02;
 lengthOfLedResponse = 50;
-relativeSecondHarmonicPowerDb = -21;
+gamma = 10;
 ```
 
 You can use our pre-generated **PAM-4** signal, which will be put into LED transmission function:
@@ -62,7 +66,7 @@ You can use our pre-generated **PAM-4** signal, which will be put into LED trans
 xInput = readmatrix('Sample data\example_PAM4_UF4_Alfa1_FilterSpan20.txt');
 ```
 
-Suppose that you want to send **100 MBaud/s** signal with amplitude coefficient equal to **1.2** (same as measurement of 2nd harmonic).
+Suppose that you want to send **100 MBaud/s** signal with amplitude coefficient equal to **1.2**.
 
 ```Matlab
 % Signal parameters
@@ -76,8 +80,7 @@ To pass the pregenerated PAM-4 signal through LED mode use this code:
 
 ```Matlab
 xOutput = ledbehavioral(xInput*signalAmplitudeCoefficient,
-ledBandwidth3dB, frequencyOfZeroInH2, relativeSecondHarmonicPowerDb,
-calibrationAmplitude, samplingFrequency, lengthOfLedResponse);
+ledBandwidth3dB, fA, gamma, eta, samplingFrequency, lengthOfLedResponse);
 ```
 
 ### **EyediagramForSampleData**
@@ -134,7 +137,7 @@ This function is utilized to incorporate a suggested behavioral model of nonline
 
 Example usage:
 ```Matlab
-y = ledbehavioral(x, ledBandwidth3dB, frequencyOfZeroInH2, relativeSecondHarmonicPowerDb, calibrationAmplitude, samplingFrequency, N);
+y = ledbehavioral(x, ledBandwidth3dB, fA, gamma, eta, samplingFrequency, N);
 ```
 The output signal of the model is represented by y, while the input signal is represented by x. It's important to note that the ledbehavioral function introduces a delay to the signal, so it's recommended to trim it using, for instance, [*finddelay*](https://www.mathworks.com/help/signal/ref/finddelay.html) function.
 
@@ -146,7 +149,7 @@ The functions and scripts have been tested in MATLAB R2022b.
 
 ## Contact
 
-- E-mail: [grzegorz.stepniak@pw.edu.pl](mailto:grzegorz.stepniak@pw.edu.pl) or [juliusz.bojarczuk@ieee.org](mailto:juliusz.bojarczuk@ieee.org)
+- E-mail: [grzegorz.stepniak@pw.edu.pl](mailto:grzegorz.stepniak@pw.edu.pl) or [juliusz.bojarczuk@pw.edu.pl](mailto:juliusz.bojarczuk@pw.edu.pl)
 - Institute of Telecommunications, Warsaw University of Technology
 
 ## Acknowledgments
