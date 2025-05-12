@@ -1,0 +1,64 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: Behavioral model of the Light Emitting Diode nonlinearity
+message: 'If you use this software, please cite it as below.'
+type: software
+authors:
+  - family-names: Bojarczuk
+    given-names: Juliusz
+    email: juliusz.bojarczuk@pw.edu.pl
+    affiliation: >-
+      Institute of Telecommunications, Warsaw University of
+      Technology
+  - family-names: Stepniak
+    given-names: Grzegorz
+    email: grzegorz.stepniak@pw.edu.pl
+    affiliation: >-
+      Institute of Telecommunications, Warsaw University of
+      Technology
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.15387939
+    description: ZENODO
+repository-code: 'https://github.com/juliusz-b/behavioral-led-model'
+abstract: >-
+  This GitHub repository contains a ready-to-use
+  implementation of a behavioral model for LED nonlinearity
+  in MATLAB.
+keywords:
+  - LED
+  - nonlinearity
+  - behavioral model
+  - MATLAB
+  - VLC
+license: LGPL-3.0
+version: 1.3.0
+date-released: '2025-05-12'
+preferred-citation:
+  type: article
+  authors:
+    - family-names: Bojarczuk
+      given-names: Juliusz
+      affiliation: 'Institute of Telecommunications and Cybersecurity, Warsaw University of Technology'
+    - family-names: Marzecki
+      given-names: Michal
+      affiliation: 'Institute of Telecommunications and Cybersecurity, Warsaw University of Technology'
+    - family-names: Sun
+      given-names: Di
+      affiliation: 'Fudan University, Institute for Electric Light Sources, School of Information Science and Technology'
+    - family-names: Jin
+      given-names: Zuxin
+      affiliation: 'Fudan University, Institute for Electric Light Sources, School of Information Science and Technology'
+    - family-names: Tian
+      given-names: Pengfei
+      affiliation: 'Fudan University, Institute for Electric Light Sources, School of Information Science and Technology'
+    - family-names: Stepniak
+      given-names: Grzegorz
+      affiliation: 'Institute of Telecommunications and Cybersecurity, Warsaw University of Technology'
+  doi: 10.1109/TCOMM.2025.3569749
+  journal: IEEE Transactions on Communications
+  month: 5
+  title: A Behavioral Model of the Light Emitting Diode Nonlinearity
+  year: 2025
