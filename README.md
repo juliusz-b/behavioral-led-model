@@ -6,7 +6,7 @@
 
 This GitHub repository contains a ready-to-use implementation of a behavioral model for Light Emitting Diode (LED) nonlinearity in MATLAB. The model is based on two filters and was detailed in the paper:
 
-> Juliusz Bojarczuk, Michal Marzecki, Di Sun, Zuxin Jin, Pengfei Tian and Grzegorz Stepniak, "A Behavioral Model of the Light Emitting Diode Nonlinearity", under consideration for publication. [![DOI](https://img.shields.io/badge/DOI-TBA-blue)]()
+> Juliusz Bojarczuk, Michal Marzecki, Di Sun, Zuxin Jin, Pengfei Tian and Grzegorz Stepniak, "A Behavioral Model of the Light Emitting Diode Nonlinearity", IEEE Transactions on Communications, may 2025. [![DOI:10.1109/TCOMM.2025.3569749](https://img.shields.io/badge/DOI-10.1109/TCOMM.2025.3569749-blue)]()
 
 **When using the behavioral LED model, please remember to support our work by citing the aforementioned paper in your article.**
 
