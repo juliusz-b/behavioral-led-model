@@ -2,6 +2,7 @@
 
 [![License](https://img.shields.io/badge/License-LGPLv3-brightgreen)]()
 ![matlab compatible](https://img.shields.io/badge/matlab-compatible-orange.svg)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15387939.svg)](https://doi.org/10.5281/zenodo.15387939)
 [![Open in MATLAB Online](https://www.mathworks.com/images/responsive/global/open-in-matlab-online.svg)](https://matlab.mathworks.com/open/github/v1?repo=juliusz-b/behavioral-led-model)
 
 This GitHub repository contains a ready-to-use implementation of a behavioral model for Light Emitting Diode (LED) nonlinearity in MATLAB. The model is based on two filters and was detailed in the paper:
